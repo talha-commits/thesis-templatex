@@ -1,8 +1,293 @@
+%\usepackage{listings}
+%\usepackage{xcolor}
+\renewcommand\lstlistingname{Source Code}
+\renewcommand\lstlistlistingname{Source Code}
+
+% Define a custom style
+\lstdefinestyle{myStyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{codeorange},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codegreen},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,
+	captionpos=b,                 
+	keepspaces=true,                 
+	numbers=left,       
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	xleftmargin=10pt,
+}
+
+
+
 %-------------------------------------------------------------------
 \chapter{Implementation}
 \label{c:implementation}
 %-------------------------------------------------------------------
 
-\epigraph{\enquote{Sometimes, the elegant implementation is just a function. Not a method. Not a class. Not a framework. Just a function.}}{\emph{John Carmack}}
 
-This chapter shows the details of the implementation of the work.
+
+%-------------------------------------------------------------------
+\section{Dataset Creation}
+%-------------------------------------------------------------------
+
+A critical component of this project is the dataset, which serves as the foundation for training and evaluating the machine learning models. The quality and diversity of the dataset are paramount in ensuring that the developed models can effectively recognize patterns in cardboard materials under various conditions. This section outlines the structure, composition, and key considerations taken into account when curating the dataset.
+
+%-------------------------------------------------------------------
+\subsection{Dataset Composition}
+%-------------------------------------------------------------------
+
+The dataset used in this project consists of a large collection of images of cardboard materials, capturing patterns. These images are taken in different environments and conditions to ensure the models are exposed to a variety of real-world scenarios. The dataset includes:
+
+\begin{itemize}
+	\item \textbf{Images:} A diverse set of images depicting different patterns and textures used in the company's cardboard, which includes different surfaces, patterns, and sizes. All of these images are taken from different distances, with different backgrounds and in different lighting conditions.
+	\item \textbf{Annotations:} Each image is meticulously annotated with labels identifying the type of pattern present. This annotation is essential for supervised learning, where the model learns to associate specific patterns with their corresponding labels.
+\end{itemize}
+
+
+
+%-------------------------------------------------------------------
+\subsection{Variation in Backgrounds}
+%-------------------------------------------------------------------
+
+To enhance the model's robustness, the dataset includes images taken against a variety of backgrounds. This variation is important because, in real-world scenarios, cardboard materials may be inspected in different environments where the background could vary significantly. The dataset includes:
+
+
+\begin{itemize}
+	\item \textbf{Neutral Backgrounds:} Images taken against plain, solid-colored backgrounds (e.g., white, black, gray) to minimize distractions and focus on the cardboard material.
+	\item \textbf{Complex Backgrounds: } Images with more complex and cluttered backgrounds, such as workbenches, warehouse settings, or other materials in the frame. This variation helps the model learn to distinguish the cardboard patterns from other objects and noise in the environment.
+\end{itemize}
+
+
+
+%-------------------------------------------------------------------
+\subsection{Changing Distances}
+%-------------------------------------------------------------------
+
+The dataset also accounts for variations in the distance between the camera and the cardboard material. This is crucial for ensuring the model can accurately recognize patterns regardless of how close or far the material is from the camera. The dataset includes:
+
+
+\begin{itemize}
+	\item \textbf{Close-Up Shots:} Clear images captured at close range, highlighting fine details and textures in the cardboard.
+	\item \textbf{Mid-Range Shots:} Images taken from a little further distance, where the entire piece of cardboard is visible in the frame.
+	\item \textbf{Long-Range Shots:} Images captured from a greater distance, where more cardboard is visible in length which helps the model learn more fine dtails like shape/form of the cardboard its fine edges and learn to differentiate it from background.
+\end{itemize}
+
+
+
+%-------------------------------------------------------------------
+\subsection{Manipulations and Augmentations}
+%-------------------------------------------------------------------
+
+To further enhance the diversity and representativeness of the dataset, various manipulations and augmentations are applied to the images. These manipulations help the model generalize better to unseen data by simulating different conditions that might be encountered in real-world applications. The dataset includes:
+
+\begin{itemize}
+	\item \textbf{Scaling:} All the images are scaled before being fed to the model for faster learning and processing.
+	
+\end{itemize}
+\begin{itemize}
+	\item \textbf{Rotations:} Images are rotated to simulate different orientations of the cardboard material and to artificially increase the data size.
+	
+\end{itemize}
+\begin{itemize}
+	\item \textbf{Rotations and Flips:} Images are flipped horizontally as well as vertically to simulate different conditions in which cardboard can be presented.
+	
+\end{itemize}
+
+
+
+%-------------------------------------------------------------------
+\subsection{Changing Lighting Conditions}
+%-------------------------------------------------------------------
+
+Lighting plays a significant role in how patterns and defects are perceived in images. To account for this, the dataset includes images captured under various lighting conditions, ensuring that the model can perform well across different environments. The dataset includes:
+
+
+\begin{itemize}
+	\item \textbf{Bright Lighting:} Images captured under strong, direct lighting, highlighting details but potentially causing glare or reflections.
+	\item \textbf{Dim Lighting: } Images taken in dim lighting conditions were btter for texture recognition as they minimized reflections and this also helped capturing fine details.
+	\item \textbf{Very Low Lighting:} Images captured in very low light have been very instrumental in capturing the general sructure of the patterns with all the reflections removed and minute details further highlighted.
+	\item \textbf{Flash Lighting:} As dim and low lights were instrumental in reducing reflections and capturing essential details, capturing with flash light proved to be helpful in capturing tiny details such as the roughness of surface and small paper fibers coming out of cardboard. Paper fibers are also a distinguishing factor because of different materials with which these cardboards are made.
+	
+	
+\end{itemize}
+
+
+%-------------------------------------------------------------------
+\subsection{Data Splitting}
+%-------------------------------------------------------------------
+
+The dataset is split into training, validation, and test sets to ensure the model is evaluated fairly and comprehensively. The training set is used to train the model, the validation set is used to tune hyperparameters and prevent overfitting, and the test set is reserved for final evaluation to measure the model's performance on unseen data. The data was split into 70-15-15, which means 70 percent for training, 15 percent for validation and 15 percent for testing.
+
+
+%-------------------------------------------------------------------
+\section{Model Implementation:}
+%-------------------------------------------------------------------
+
+The success of this project relies heavily on the careful selection and implementation of machine learning models and methodologies tailored to the specific challenges of pattern recognition in cardboard materials. This section outlines the key components of the project's modeling approach, including the application domain, model selection, system architecture, and the detection mechanism employed to achieve efficient and accurate pattern recognition.
+
+%-------------------------------------------------------------------
+\subsection{Application}
+%-------------------------------------------------------------------
+
+The primary application of this project is to develop an automated system for detecting and classifying patterns in cardboards. The system is designed for use in industrial settings, where it can be integrated into processes to ensure that cardboard products passing are the ones required. The automated detection system offers several advantages over traditional manual inspection methods:
+
+
+\begin{itemize}
+	\item \textbf{Efficiency:} The system can process a large volume of images quickly, making it suitable for high-throughput environments.
+	\item \textbf{Accuracy:} Machine learning models can consistently identify patterns and defects with high precision, reducing the likelihood of human error.
+	\item \textbf{Scalability:} The system can be easily scaled to accommodate different types of cardboard materials and varying production line speeds.
+	
+\end{itemize}
+
+The ultimate goal is to enhance the quality control process, reduce material waste, and improve overall product quality in the cardboard industry.
+
+
+%-------------------------------------------------------------------
+\subsection{Model}
+%-------------------------------------------------------------------
+
+The core of the detection system is based on Convolutional Neural Networks (CNNs), a class of deep learning models particularly well-suited for image analysis tasks. CNNs are chosen for this project due to their ability to learn hierarchical features directly from raw image data, making them highly effective for recognizing complex patterns and subtle defects in cardboard materials.
+
+
+%-------------------------------------------------------------------
+\subsection*{Model Architecture}
+%-------------------------------------------------------------------
+The CNN architecture is designed with several key layers that work together to extract features from the input images:
+
+\begin{itemize}
+	\item \textbf{Convolutional Layers:} These layers apply a series of filters to the input image, detecting edges, textures, and other low-level features. As the data passes through multiple convolutional layers, the network learns increasingly abstract features that are crucial for pattern recognition.
+	\item \textbf{Pooling Layers: } Pooling layers reduce the spatial dimensions of the feature maps, helping to reduce the computational load and make the model more robust to variations in the input images, such as shifts and rotations.
+	\item \textbf{Fully Connected Layers: } These layers take the high-level features extracted by the convolutional layers and combine them to make a final classification decision. The fully connected layers allow the model to consider the entire image context when predicting the class of the input pattern or defect.
+	\item \textbf{Output Layer:} The output layer uses a softmax activation function to produce a probability distribution over the possible classes, enabling the model to predict the most likely pattern or defect type for each input image.
+	
+\end{itemize}
+
+
+%-------------------------------------------------------------------
+\subsection{Training Process}
+%-------------------------------------------------------------------
+The model is trained on annotated dataset of cardboard images. The training process involves optimizing the model's parameters using backpropagation and gradient descent, with the goal of minimizing the loss function, which measures the difference between the model's predictions and the actual labels.
+
+%-------------------------------------------------------------------
+\subsection{Optimization Techniques}
+%-------------------------------------------------------------------
+To enhance the model's performance and generalization capabilities, several optimization techniques are employed:
+	
+\begin{itemize}
+	\item \textbf{Data Augmentation:}
+	Techniques such as rotations, horizontal and vertical flips are applied to the training data to increase its diversity and prevent overfitting. Not much augmentations can be applied as the patterns have very minute differences and can lead to generation of wrong training data.
+	\item \textbf{Transfer Learning: } The base models are pre-trained on ImgaeNet and its convolutional layers are frozen. This leverages previously learned feature representations and prevents overfitting on a small dataset.
+	\item \textbf{Adam Optimizer with Backpropagation: }
+	The Adam optimizer is used to update the network weights during backpropagation. Adam combines the advantages of momentum and adaptive learning rates, ensuring faster convergence and stability.
+	\item \textbf{Custom Data Generator: }
+	A custom data generator loads images and annotations in batches, efficiently handling large datasets and preventing memory overload while enabling multi-output training (classification and bounding box regression).
+	\item \textbf{Model Checkpointing:}
+	After each interval, the model is saved to preserve progress, which allows resuming training without starting from scratch and prevents losing the best-performing model.
+	
+	
+\end{itemize}	
+
+
+%-------------------------------------------------------------------
+\section{System Architecture}
+%-------------------------------------------------------------------
+
+The system architecture is designed to support the real-time processing requirements of the application while maintaining flexibility and scalability. The architecture consists of several key components:
+
+
+%-------------------------------------------------------------------
+\subsection{Data Ingestion and Preprocessing}
+%-------------------------------------------------------------------
+The system begins by ingesting raw image data from provided source. The images are then preprocessed to standardize their size, resolution, and format, ensuring that they are suitable for input into the machine learning models.
+
+
+%-------------------------------------------------------------------
+\subsection{Model Inference}
+%-------------------------------------------------------------------
+Once the images are preprocessed, they are passed through the trained CNN model for inference. The model processes each image and stores a classification or detection result, identifying the presence and type of pattern or defect in the image.
+
+%-------------------------------------------------------------------
+\subsection{Deployment Considerations}
+%-------------------------------------------------------------------
+The system is designed to be deployed on edge devices or cloud platforms, depending on the specific requirements of the industrial environment. Edge deployment offers the advantage of low latency and reduced reliance on network connectivity, making it ideal for real-time applications. Cloud deployment, on the other hand, provides greater computational resources and scalability, suitable for large-scale operations.
+
+%-------------------------------------------------------------------
+\section{Detection}
+%-------------------------------------------------------------------
+The system uses bounding boxes to localize defects and patterns within the images. A bounding box is a rectangular region that encloses the area of interest, such as a defect or specific pattern. The use of bounding boxes offers several advantages:
+
+\begin{itemize}
+	\item \textbf{Localization:} Bounding boxes provide precise information about the location of defects, enabling targeted interventions on the production line.
+	\item \textbf{Localization:} The system can handle multiple bounding boxes within a single image, making it suitable for detecting multiple defects or patterns simultaneously.
+	\item \textbf{Localization:} By focusing only on the regions of interest, the system can reduce the amount of data that needs to be processed, leading to faster inference times and lower computational requirements.
+
+\end{itemize}
+
+For this reason, instance segmentation has been trained and applied using YOLOv8. It detects a mask according to the images it was trained on, if it is able to detect a mask, then the model tries to classify the image.
+
+
+%-------------------------------------------------------------------
+\subsection{Implementation of YOLOv8 for Instance Segmentation}
+%-------------------------------------------------------------------
+
+This section explores the integration of YOLOv8, a state-of-the-art deep learning model, for instance segmentation applications, specifically focusing on classifying cardboard flutes. The methodology employed provides a systematic approach to improve model accuracy and operational efficiency. 
+
+To successfully integrate YOLOv8 for instance segmentation, the initial step involves data preparation, which is crucial for optimal model performance. A balanced dataset, containing high-resolution images of various cardboard flute designs, served as the foundation. This dataset was diverse enough to include variations in angles and lighting conditions, as these factors can significantly influence the model's learning capabilities.
+ 
+For instance segmentation task also, data augmentation techniques such as rotation, scaling, and brightness adjustments are also applied through Roboflow to artificially expand the dataset, providing the model with a wider range of scenarios to improve its generalization ability. During this stage, careful attention was given to annotation techniques. In this case, manual annotation was done as it provides the best accuracy. Also, the annotations were done for half of the dataset only and it was noted that the model was able to detect the remaining images accurately.
+
+YOLOv8's use of advanced techniques such as anchor boxes and spatial attention allows it to better capture the nuances of the cardboard flutes. This enhances not only general classification accuracy of our previously used models but also the system's robustness in complex image environments, where several objects might be present simultaneously.The impact of YOLOv8 in improving accuracy levels compared to conventional classification methods is compelling. By leveraging instance segmentation along with other models, helps us to  effectively identify the object and saves preprocessing time.
+ 
+The half of images on which YOLOv8 was trained to perform instance segmentation were carefully selected, so that in any case the model should be able to identify images. In this case, many images were deleted from training so that the model never gets confused. Those images were later used to test if the features learned by model are able to detect the object in cluttered environment and the results were compelling. Through effective model training under varied conditions, YOLOv8 exhibits improved generalization capabilities, suitable for real-world scenarios, further discussed in the next chapter.
+
+
+%-------------------------------------------------------------------
+\subsection{Website Development for Easy Usage}
+%-------------------------------------------------------------------
+
+The development of a user-focused web interface for image uploads represents a pivotal step in facilitating the interaction between users and machine learning models designed for classifying cardboard flutes through instance segmentation. The goal of this interface is to streamline user experiences while enhancing the practical application of sophisticated machine learning techniques.
+ 
+Key features and functionalities are essential in creating this web interface. At its core, the interface allows users to effortlessly upload images, with a design that is intuitive and user-friendly. The integration of drag-and-drop capabilities enhances user interactions by providing an engaging method for submitting images, reducing barriers to entry for those who may lack technical expertise. Furthermore, real-time feedback mechanisms incorporated inform users about the status of their uploads and the outcomes of the classification process.
+
+User experience (UX) design principles such as consistency, simplicity, and visual hierarchy guide the layout and presentation of the interface, aiding users in navigational tasks. The users are allowed to modify images and resubmit them based on initial output from the machine learning model. Factors such as image resizing, normalization, and format conversions are done on backend, allowing user to not worry about anything else and it also helps us to apply our deep network model and instance segmentation. The approach managed to minimize manually doing both tasks while retaining the quality needed for accurate classification.
+
+
+Step-by-step Pictures:
+\vspace{-30pt}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/Step1}
+	\caption{ Click to upload Image\label{f:Step1}}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/Step2}
+	\caption{ After Uploading Image, click on Process Image. The image will be segmented.\label{f:Step2}}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/Step3}
+	\caption{ Now click on Classify Image and it will classify the image.\label{f:Step3}}
+\end{figure}
+
+
+\noindent
+\par
+
+When the image has been uploaded, the classification result will be shown. In this way an image can easily be uploaded and classified.
+
+\vspace{1em}
+
+In summary, the development of a web interface for facilitating image uploads in the context of cardboard flute classification represents a multifaceted endeavor that intertwines technical proficiency, user-focused design, and ethical considerations. By prioritizing usability and accessibility, while also ensuring robust technical architecture, the web application can serve as a powerful conduit for users, enhancing interaction with machine learning technologies and fostering a deeper appreciation for the complexities found in cardboard flute production.
+
+
+
