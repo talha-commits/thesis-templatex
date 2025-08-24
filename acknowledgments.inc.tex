@@ -1,7 +1,78 @@
-\chapter*{Acknowledgments}
+\documentclass{styles/tthesis}
 
-Some acknowledgments to family, friends, supervisors, etc.
+\newcommand{\dspic}{dsPIC$^{\text{\textregistered}}$ DSC}
+\newcommand{\dcbus}{DC-BUS\texttrademark }
 
-\thispagestyle{empty}
-\mbox{}
-\newpage
+\title{Pattern Recognition in Cardbaord Materials Using Machine Learning}
+\author{Talha Shabbir}
+\graduation{Master Degree in Industrial Automation Engineering}
+\academicyear{2024/2025}
+\supervisor{
+	Prof. Tullio Facchinetti \\
+}
+
+%-------------------------------------------------------------------
+\begin{document}
+	%-------------------------------------------------------------------
+	
+	%--------------------
+	% Title Page
+	%--------------------
+	\printfrontpage
+	
+	%--------------------
+	% Empty Page after Title Page
+	%--------------------
+%	\thispagestyle{empty}
+%	\mbox{}
+%	\newpage
+	
+	%--------------------
+	% Abstract
+	%--------------------
+	\input{abstract.inc}
+	
+	%--------------------
+	% Empty Page after Abstract
+	%--------------------
+	\thispagestyle{empty}
+	\mbox{}
+	\newpage
+	
+	%--------------------
+	% Acknowledgments
+	%--------------------
+	\input{acknowledgments.inc}
+	
+	%--------------------
+	% Empty Page after Acknowledgments
+	%--------------------
+	\thispagestyle{empty}
+	\mbox{}
+	\newpage
+	
+\tableofcontents
+\listoffigures
+%\listoftables
+
+\mainmatter
+
+\input{chapter_acronyms.inc}
+\input{chapter_intro.inc}
+\input{chapter_sota.inc}
+\input{chapter_tools.inc}
+\input{chapter_implementation.inc}
+\input{chapter_results.inc}
+\input{chapter_conclusions.inc}
+
+%\backmatter
+
+%-------------------------------------------------------------------
+Bibliography
+%-------------------------------------------------------------------
+
+%\label{Bibliography}
+%\bibliographystyle{plain}
+%\bibliography{biblio}
+
+\end{document}
