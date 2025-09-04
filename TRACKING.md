@@ -10,7 +10,7 @@ Number | Chapter        | Version | Status  | Responsibility
 ------ | -------------- | ------- | ------- | --------------
 0      | Abstract       | v1      | WRITING | Prof
 1      | Intro          | v1      | WRITING | Prof
-2      | SOTA           | v1      | WRITING | Student
+2      | SOTA           | v1      | WRITING | Prof
 3      | Tools          | v1      | WRITING | Student
 4      | Implementation | v1      | WRITING | Student
 5      | Results        | v1      | WRITING | Student
