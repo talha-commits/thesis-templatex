@@ -179,7 +179,7 @@ The model is trained on annotated dataset of cardboard images. The training proc
 \subsection{Optimization Techniques}
 %-------------------------------------------------------------------
 To enhance the model's performance and generalization capabilities, several optimization techniques are employed:
-	
+
 \begin{itemize}
 	\item \textbf{Data Augmentation:}
 	Techniques such as rotations, horizontal and vertical flips are applied to the training data to increase its diversity and prevent overfitting. Not much augmentations can be applied as the patterns have very minute differences and can lead to generation of wrong training data.
@@ -227,7 +227,7 @@ The system uses bounding boxes to localize defects and patterns within the image
 	\item \textbf{Localization:} Bounding boxes provide precise information about the location of defects, enabling targeted interventions on the production line.
 	\item \textbf{Localization:} The system can handle multiple bounding boxes within a single image, making it suitable for detecting multiple defects or patterns simultaneously.
 	\item \textbf{Localization:} By focusing only on the regions of interest, the system can reduce the amount of data that needs to be processed, leading to faster inference times and lower computational requirements.
-
+	
 \end{itemize}
 
 For this reason, instance segmentation has been trained and applied using YOLOv8. It detects a mask according to the images it was trained on, if it is able to detect a mask, then the model tries to classify the image.
@@ -240,11 +240,11 @@ For this reason, instance segmentation has been trained and applied using YOLOv8
 This section explores the integration of YOLOv8, a state-of-the-art deep learning model, for instance segmentation applications, specifically focusing on classifying cardboard flutes. The methodology employed provides a systematic approach to improve model accuracy and operational efficiency. 
 
 To successfully integrate YOLOv8 for instance segmentation, the initial step involves data preparation, which is crucial for optimal model performance. A balanced dataset, containing high-resolution images of various cardboard flute designs, served as the foundation. This dataset was diverse enough to include variations in angles and lighting conditions, as these factors can significantly influence the model's learning capabilities.
- 
+
 For instance segmentation task also, data augmentation techniques such as rotation, scaling, and brightness adjustments are also applied through Roboflow to artificially expand the dataset, providing the model with a wider range of scenarios to improve its generalization ability. During this stage, careful attention was given to annotation techniques. In this case, manual annotation was done as it provides the best accuracy. Also, the annotations were done for half of the dataset only and it was noted that the model was able to detect the remaining images accurately.
 
 YOLOv8's use of advanced techniques such as anchor boxes and spatial attention allows it to better capture the nuances of the cardboard flutes. This enhances not only general classification accuracy of our previously used models but also the system's robustness in complex image environments, where several objects might be present simultaneously.The impact of YOLOv8 in improving accuracy levels compared to conventional classification methods is compelling. By leveraging instance segmentation along with other models, helps us to  effectively identify the object and saves preprocessing time.
- 
+
 The half of images on which YOLOv8 was trained to perform instance segmentation were carefully selected, so that in any case the model should be able to identify images. In this case, many images were deleted from training so that the model never gets confused. Those images were later used to test if the features learned by model are able to detect the object in cluttered environment and the results were compelling. Through effective model training under varied conditions, YOLOv8 exhibits improved generalization capabilities, suitable for real-world scenarios, further discussed in the next chapter.
 
 
@@ -253,30 +253,36 @@ The half of images on which YOLOv8 was trained to perform instance segmentation 
 %-------------------------------------------------------------------
 
 The development of a user-focused web interface for image uploads represents a pivotal step in facilitating the interaction between users and machine learning models designed for classifying cardboard flutes through instance segmentation. The goal of this interface is to streamline user experiences while enhancing the practical application of sophisticated machine learning techniques.
- 
+
 Key features and functionalities are essential in creating this web interface. At its core, the interface allows users to effortlessly upload images, with a design that is intuitive and user-friendly. The integration of drag-and-drop capabilities enhances user interactions by providing an engaging method for submitting images, reducing barriers to entry for those who may lack technical expertise. Furthermore, real-time feedback mechanisms incorporated inform users about the status of their uploads and the outcomes of the classification process.
 
 User experience (UX) design principles such as consistency, simplicity, and visual hierarchy guide the layout and presentation of the interface, aiding users in navigational tasks. The users are allowed to modify images and resubmit them based on initial output from the machine learning model. Factors such as image resizing, normalization, and format conversions are done on backend, allowing user to not worry about anything else and it also helps us to apply our deep network model and instance segmentation. The approach managed to minimize manually doing both tasks while retaining the quality needed for accurate classification.
 
 
 Step-by-step Pictures:
-\vspace{-30pt}
+
+1. Click to upload image.
+\vspace{-20pt}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figs/Step1}
-	\caption{ Click to upload Image\label{f:Step1}}
+	\caption{ Image Upload\label{f:Step1}}
 \end{figure}
 
+2. After Uploading Image, click on Process Image. The image will be segmented.
+\vspace{-30pt}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figs/Step2}
-	\caption{ After Uploading Image, click on Process Image. The image will be segmented.\label{f:Step2}}
+	\caption{ Process Image.\label{f:Step2}}
 \end{figure}
 
+\vspace{100pt}
+3. Now click on Classify Image and it will classify the image.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figs/Step3}
-	\caption{ Now click on Classify Image and it will classify the image.\label{f:Step3}}
+	\caption{ Classify Image.\label{f:Step3}}
 \end{figure}
 
 
